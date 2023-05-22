@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  postgesql:
+    image: postgres:15.2-bullseye
+    container_name: microservices_postgesql
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=p4ssw0rd
+      - POSTGRES_DB=products
+      - POSTGRES_HOST=5432
+    command: -p 5432
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
+    networks: [ "microservices" ]
+  redis:
+    image: redis:6-alpine
+    restart: always
+    container_name: microservices_redis
+    ports:
+      - "6379:6379"
+    networks: [ "microservices" ]
+
+networks:
+  microservices:
+    name: microservices

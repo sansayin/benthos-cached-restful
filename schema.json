@@ -1,0 +1,24 @@
+{
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Person",
+    "type": "object",
+    "properties": {
+        "Compound": {
+            "type": "number",
+            "description": "The person's first name."
+        },
+        "Negative": {
+            "type": "number",
+            "description": "The person's last name."
+        },
+        "Positive": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "number"
+        },
+        "Neutral": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "number"
+        }
+    }
+}

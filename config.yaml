@@ -1,0 +1,42 @@
+#test cmd: curl  "http://127.0.0.1:4195/post" -d "sad" -v
+input:
+  http_server:
+    path: /post
+    allowed_verbs:
+      - POST 
+    timeout: 5s
+    sync_response:
+      status: "200"
+      headers:
+        Content-Type: application/json
+pipeline:
+  processors:
+    - cached:
+        key: '${! content() }'
+        cache: sentiment_cache 
+        processors:
+          - bloblang: root = content().sentiment().string()
+          - log:
+              message: '${! content() }'
+          - sql_insert:
+              driver: postgres 
+              dsn: postgres://postgres:p4ssw0rd@localhost:5432/dev?sslmode=disable
+              table: sink 
+              columns: [ compound, negative, neutral, positive ]
+              args_mapping: |
+                root = [
+                  this.Compound,
+                  this.Negative,
+                  this.Neutral,
+                  this.Positive
+                ] 
+    - sync_response: {}
+output:
+  label: ""
+  file:
+    path: "./output.txt"
+    codec: lines
+cache_resources:
+  - label: sentiment_cache 
+    redis:
+      url: tcp://localhost:6379
