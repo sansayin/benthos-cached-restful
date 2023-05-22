@@ -11,7 +11,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=p4ssw0rd
-      - POSTGRES_DB=products
+      - POSTGRES_DB=dev
       - POSTGRES_HOST=5432
     command: -p 5432
     volumes:
