@@ -17,3 +17,6 @@ go run . -c ./config.yaml
 ```
 curl "http://localhost:4195/post" -d "any words" -v
 ```
+
+# Reference
+https://www.benthos.dev
